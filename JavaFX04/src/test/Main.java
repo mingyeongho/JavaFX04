@@ -43,8 +43,8 @@ public class Main extends Application{
 			btn2.setEffect(null);
 		});
 		
-		Image img = new Image("file:///C:/Users/min gyeong ho/git/JavaFX04/JavaFX04/src/images/Check_16x16.png");
-		Image declineImg = new Image("file:///C:/Users/min gyeong ho/git/JavaFX04/JavaFX04/src/images/Delete_16x16.png");
+		Image img = new Image("images/Check_16x16.png");
+		Image declineImg = new Image("images/Delete_16x16.png");
 		Button btn3 = new Button("Accept", new ImageView(img));
 		btn3.setOnAction(event-> {
 			if (btn3.getText().equals("Accept") ) {
