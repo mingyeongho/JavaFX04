@@ -2,7 +2,7 @@ package calculator;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.StringTokenizer;
+import java.util.Vector;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,11 +12,14 @@ import javafx.scene.control.Label;
 public class RootController implements Initializable {
 	
 	@FXML Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
-	@FXML Button btnDiv, btnMul, btnMin, btnPlu, btnDou, btnEq, btnClear;
-	@FXML Label result;
+	@FXML Button btnDiv, btnMul, btnMin, btnPlu, btnDot, btnEq, btnClear;
+	@FXML Label result, formula;
 	
 	double op1, op2;
-	String operator;
+	String operator = "";
+	
+	Vector<Double> operands = new Vector<Double>();
+	Vector<String> operators = new Vector<String>();
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -51,10 +54,11 @@ public class RootController implements Initializable {
 			}
 		});
 		btn4.setOnAction(event-> {
-			if (result.getText().equals("0")) {
-				result.setText(btn4.getText());
-			} else {
+			
+			if (operator.equals("")) {
 				result.setText(result.getText()+btn4.getText());
+			} else {
+				result.setText(result.getText() + btn4.getText());
 			}
 		});
 		btn5.setOnAction(event-> {
@@ -92,49 +96,54 @@ public class RootController implements Initializable {
 				result.setText(result.getText()+btn9.getText());
 			}
 		});
-		btnDiv.setOnAction(event-> {
-			op1 = Double.parseDouble(result.getText());
-			result.setText(result.getText()+"/");
-			operator = "/";
+		btnPlu.setOnAction(event->{
+			operands.add(Double.parseDouble(result.getText()));
+			operators.add("+");
+			formula.setText(formula.getText()+result.getText()+"+");
+			result.setText("");
 		});
-		btnMul.setOnAction(event-> {
-			op1 = Double.parseDouble(result.getText());
-			result.setText(result.getText()+"*");
-			operator = "*";
+		btnMin.setOnAction(event->{
+			operands.add(Double.parseDouble(result.getText()));
+			operators.add("-");
+			formula.setText(formula.getText()+result.getText()+"-");
+			result.setText("");
 		});
-		btnMin.setOnAction(event-> {
-			op1 = Double.parseDouble(result.getText());
-			result.setText(result.getText()+"-");
-			operator = "-";
+		btnMul.setOnAction(event->{
+			operands.add(Double.parseDouble(result.getText()));
+			operators.add("*");
+			formula.setText(formula.getText()+result.getText()+"*");
+			result.setText("");
 		});
-		btnPlu.setOnAction(event-> {
-			op1 = Double.parseDouble(result.getText());
-			result.setText(result.getText()+"+");
-			operator = "+";
+		btnDiv.setOnAction(event->{
+			operands.add(Double.parseDouble(result.getText()));
+			operators.add("/");
+			formula.setText(formula.getText()+result.getText()+"/");
+			result.setText("");
 		});
-		btnDou.setOnAction(event-> {
+		btnDot.setOnAction(event-> {
 			result.setText(result.getText()+".");
 		});
-		btnClear.setOnAction(event-> {
-			op1 = 0;
-			op2 = 0;
-			operator = "";
-			result.setText("0");
+		btnClear.setOnAction(event->{
+			operands.clear();
+			operators.clear();
+			formula.setText("");
+			result.setText("");
 		});
-		btnEq.setOnAction(event-> {
-			StringTokenizer st = new StringTokenizer(result.getText(), operator);
-			while (st.hasMoreTokens()) {
-				op2 = Double.parseDouble(st.nextToken());
-			}
-			if (operator.equals("/")) {
-				result.setText(Double.toString(op1/op2));
-			} else if (operator.equals("-")) {
-				result.setText(Double.toString(op1-op2));
-			} else if (operator.equals("+")) {
-				result.setText(Double.toString(op1+op2));
-			} else if (operator.equals("*")) {
-				result.setText(Double.toString(op1*op2));
-			}
+		/*
+		 * operator[0] : operand[0] operand[1]
+		 * operator[1] : operand[1] operand[2]
+		 * operator[2] : operand[2] operand[3]
+		 */
+		// 2 + 4 * 2 + 2 = 12
+		// 2 + 8 + 2 
+		// operator[0] = '+'
+		// operator[1] = '*'
+		// operator[2] = '+'
+		btnEq.setOnAction(event->{
+			
+			
+			operands.clear();
+			operators.clear();
 		});
 		
 	}

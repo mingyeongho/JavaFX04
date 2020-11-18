@@ -1,69 +1,79 @@
 package test;
 
+
+
 import javafx.application.Application;
-import javafx.geometry.Pos;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Main extends Application{
+	TableView<Person> table = new TableView<Person>();
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		HBox root = new HBox();
-		root.setAlignment(Pos.CENTER);
-		root.setSpacing(15.0);
 		
-		Button btn1 = new Button();
-		btn1.setText("Hello");
-		btn1.setOnAction(event-> {
-			if (btn1.getText().equals("Hello") ) {
-				btn1.setText("Accept");
-			} else {
-				btn1.setText("Hello");
-			}
-		});
+		VBox root = new VBox();
+		root.setPadding(new Insets(10));
+		root.setSpacing(5);
 		
-		Button btn2 = new Button("Accept");
-		DropShadow shad = new DropShadow();
-		btn2.setOnAction(event-> {
-			if (btn2.getText().equals("Hello") ) {
-				btn2.setText("Accept");
-			} else {
-				btn2.setText("Hello");
-			}
-		});
-		btn2.setOnMouseEntered(event-> {
-			btn2.setEffect(shad);
-		});
-		btn2.setOnMouseExited(event-> {
-			btn2.setEffect(null);
-		});
+		Label label = new Label("Address Book");
+		label.setFont(new Font("Arial",20));
 		
-		Image img = new Image("images/Check_16x16.png");
-		Image declineImg = new Image("images/Delete_16x16.png");
-		Button btn3 = new Button("Accept", new ImageView(img));
-		btn3.setOnAction(event-> {
-			if (btn3.getText().equals("Accept") ) {
-				btn3.setText("Decline");
-				btn3.setGraphic(new ImageView(declineImg));
-			} else {
-				btn3.setText("Accept");
-				btn3.setGraphic(new ImageView(img));
-			}
-		});
+		table.setEditable(true);
+		TableColumn firstNameCol = new TableColumn("First Name");
+		TableColumn lastNameCol = new TableColumn("Last Name");
+		TableColumn emailCol = new TableColumn("Email");
 		
-		root.getChildren().addAll(btn1, btn2, btn3);
+		firstNameCol.setCellValueFactory(new PropertyValueFactory<Person, String>("firstName"));
 		
-		Scene scene = new Scene(root, 300, 300);
+		table.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
 		
-		primaryStage.setTitle("test");
+		root.getChildren().addAll(label, table);
+		
+		Scene scene = new Scene(root, 350, 300);
+		
+		primaryStage.setTitle("Test");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
+	}
+	public class Person{
+		private SimpleStringProperty firstName;
+		private SimpleStringProperty lastName;
+		private SimpleStringProperty email;
+		
+		public Person(String firstName, String lastName, String email) {
+			this.firstName = new SimpleStringProperty(firstName);
+			this.lastName = new SimpleStringProperty(lastName);
+			this.email = new SimpleStringProperty(email);
+		}
+		
+		public String getFirstName() {
+			return this.firstName.get();
+		}
+		public void setFirstName(String firstName) {
+			this.firstName.set(firstName);
+		}
+		public String getLastName() {
+			return this.lastName.get();
+		}
+		public void setLastName(String lastName) {
+			this.lastName.set(lastName);
+		}
+		public String getEmail() {
+			return this.email.get();
+		}
+		public void setEmail(String email) {
+			this.email.set(email);
+		}
 	}
 	public static void main(String[] args) {
 		launch(args);

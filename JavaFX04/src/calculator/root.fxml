@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <GridPane hgap="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" vgap="7.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="calculator.RootController">
@@ -24,14 +25,19 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label fx:id="result" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="44.0" prefWidth="599.0" style="-fx-background-color: orange;" textAlignment="RIGHT" GridPane.columnSpan="4">
-         <GridPane.margin>
-            <Insets />
-         </GridPane.margin>
-         <font>
-            <Font size="35.0" />
-         </font>
-      </Label>
+      <VBox prefHeight="91.0" prefWidth="133.0" spacing="5.0" style="-fx-background-color: orange;" GridPane.columnSpan="4">
+         <children>
+            <Label fx:id="formula" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="36.0" prefWidth="380.0" text="" textFill="GREY" />
+            <Label fx:id="result" alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="380.0" text="">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets right="5.0" top="5.0" />
+         </padding>
+      </VBox>
       <Button fx:id="btn7" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #6495ED;" text="7" GridPane.rowIndex="1">
          <font>
             <Font size="35.0" />
@@ -92,7 +98,7 @@
             <Font size="35.0" />
          </font>
       </Button>
-      <Button fx:id="btnDou" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #6495ED;" text="." GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <Button fx:id="btnDot" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #6495ED;" text="." GridPane.columnIndex="1" GridPane.rowIndex="4">
          <font>
             <Font size="35.0" />
          </font>
