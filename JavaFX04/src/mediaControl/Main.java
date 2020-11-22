@@ -36,9 +36,7 @@ public class Main extends Application{
 		hbox.setAlignment(Pos.CENTER);
 		hbox.setSpacing(30);
 		hbox.setStyle("fx-background-color: Black");
-//		C:\Users\min gyeong ho\git\JavaFX04\JavaFX04\src\icon_media_sounds\media
-//		C:\Users\min gyeong ho\git\JavaFX04\JavaFX04\src\icon_media_sounds\icons
-//		C:\Users\min gyeong ho\git\JavaFX04\JavaFX04\src\mediaControl\Main
+		
 		Button pauseBtn = new Button();
 		pauseBtn.setGraphic(new ImageView(new Image(new FileInputStream("C:\\Users\\min gyeong ho\\git\\JavaFX04\\JavaFX04\\src\\icon_media_sounds\\icons\\Pause.png"))));
 		pauseBtn.setOnAction(event->{

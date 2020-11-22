@@ -2,7 +2,9 @@ package calculator;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Vector;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,15 +17,8 @@ public class RootController implements Initializable {
 	@FXML Button btnDiv, btnMul, btnMin, btnPlu, btnDot, btnEq, btnClear;
 	@FXML Label result, formula;
 	
-	double op1, op2;
-	String operator = "";
-	
-	Vector<Double> operands = new Vector<Double>();
-	Vector<String> operators = new Vector<String>();
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
 		
 		btn0.setOnAction(event-> {
 			if (result.getText().equals("0")) {
@@ -54,11 +49,10 @@ public class RootController implements Initializable {
 			}
 		});
 		btn4.setOnAction(event-> {
-			
-			if (operator.equals("")) {
-				result.setText(result.getText()+btn4.getText());
+			if (result.getText().equals("0")) {
+				result.setText(btn4.getText());
 			} else {
-				result.setText(result.getText() + btn4.getText());
+				result.setText(result.getText()+btn4.getText());
 			}
 		});
 		btn5.setOnAction(event-> {
@@ -97,26 +91,18 @@ public class RootController implements Initializable {
 			}
 		});
 		btnPlu.setOnAction(event->{
-			operands.add(Double.parseDouble(result.getText()));
-			operators.add("+");
 			formula.setText(formula.getText()+result.getText()+"+");
 			result.setText("");
 		});
 		btnMin.setOnAction(event->{
-			operands.add(Double.parseDouble(result.getText()));
-			operators.add("-");
 			formula.setText(formula.getText()+result.getText()+"-");
 			result.setText("");
 		});
 		btnMul.setOnAction(event->{
-			operands.add(Double.parseDouble(result.getText()));
-			operators.add("*");
 			formula.setText(formula.getText()+result.getText()+"*");
 			result.setText("");
 		});
 		btnDiv.setOnAction(event->{
-			operands.add(Double.parseDouble(result.getText()));
-			operators.add("/");
 			formula.setText(formula.getText()+result.getText()+"/");
 			result.setText("");
 		});
@@ -124,26 +110,29 @@ public class RootController implements Initializable {
 			result.setText(result.getText()+".");
 		});
 		btnClear.setOnAction(event->{
-			operands.clear();
-			operators.clear();
 			formula.setText("");
 			result.setText("");
 		});
-		/*
-		 * operator[0] : operand[0] operand[1]
-		 * operator[1] : operand[1] operand[2]
-		 * operator[2] : operand[2] operand[3]
-		 */
-		// 2 + 4 * 2 + 2 = 12
-		// 2 + 8 + 2 
-		// operator[0] = '+'
-		// operator[1] = '*'
-		// operator[2] = '+'
+		
 		btnEq.setOnAction(event->{
+			// javascript의 eval함수를 사용하고 싶어서 구글링했더니 사용하는 방법이 있어서 eval을 사용했습니다.
+			// 출처: https://unikys.tistory.com/226 [All-round programmer]
+			formula.setText(formula.getText()+result.getText());
+			result.setText("");
 			
-			
-			operands.clear();
-			operators.clear();
+			ScriptEngineManager mgr = new ScriptEngineManager();
+		    ScriptEngine engine = mgr.getEngineByName("js");
+		    try {
+		    	double res = Double.parseDouble(String.valueOf(engine.eval(formula.getText())));
+		    	/*
+		    	 * double res = (double)(engine.eval(formula.getText())를 하니까 에러가 나서
+		    	 * engine.eval()을 string으로 바꾼 후 double로 변환했습니다.
+		    	 */
+		    	result.setText(Double.toString(res));
+		    } catch(Exception e) {
+		    	e.printStackTrace();
+		    }
+
 		});
 		
 	}
